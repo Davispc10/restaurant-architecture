@@ -1,0 +1,94 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.7.3/schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "suspicious": {
+        "noExplicitAny": "off",
+        "noPrototypeBuiltins": "off",
+        "noConfusingVoidType": "off",
+        "noImplicitAnyLet": "warn",
+        "noAssignInExpressions": "warn",
+        "noDoubleEquals": "warn",
+        "noGlobalIsNan": "warn",
+        "noGlobalIsFinite": "warn",
+        "useIsArray": "warn",
+        "noShadowRestrictedNames": "warn",
+        "noMisleadingCharacterClass": "warn",
+        "useValidTypeof": "warn",
+        "noRedeclare": "warn",
+        "noDuplicateClassMembers": "warn",
+        "noAsyncPromiseExecutor": "warn"
+      },
+      "correctness": {
+        "noUnusedImports": "warn",
+        "noVoidTypeReturn": "warn",
+        "noConstructorReturn": "warn",
+        "noUnnecessaryContinue": "warn",
+        "noUnsafeOptionalChaining": "warn",
+        "noSwitchDeclarations": "warn"
+      },
+      "style": {
+        "useImportType": "off",
+        "useTemplate": "warn",
+        "noParameterAssign": "warn",
+        "useNodejsImportProtocol": "warn",
+        "useExponentiationOperator": "warn",
+        "noUselessElse": "warn",
+        "useSingleVarDeclarator": "warn",
+        "useDefaultParameterLast": "warn",
+        "noArguments": "warn",
+        "noUnusedTemplateLiteral": "warn",
+        "noNonNullAssertion": "warn",
+        "noCommaOperator": "warn"
+      },
+      "complexity": {
+        "noForEach": "warn",
+        "noStaticOnlyClass": "off",
+        "noThisInStatic": "warn",
+        "useOptionalChain": "warn",
+        "noBannedTypes": "warn",
+        "noUselessConstructor": "warn",
+        "noUselessCatch": "warn",
+        "useLiteralKeys": "warn",
+        "noExcessiveNestedTestSuites": "warn"
+      },
+      "performance": {
+        "noDelete": "warn",
+        "noAccumulatingSpread": "warn"
+      }
+    },
+    "ignore": ["./dist"]
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": true,
+    "attributePosition": "auto",
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 100
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "arrowParentheses": "always",
+      "bracketSpacing": true,
+      "quoteProperties": "asNeeded",
+      "semicolons": "always",
+      "trailingComma": "none"
+    },
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
+    }
+  },
+  "json": {
+    "formatter": {
+      "trailingCommas": "none"
+    }
+  }
+}

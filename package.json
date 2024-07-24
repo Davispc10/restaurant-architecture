@@ -1,0 +1,43 @@
+{
+  "name": "clean-bun",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/http/server.ts",
+    "build": "bun build src/http/server.ts",
+    "start": "NODE_ENV=production bun src/http/server.ts",
+    "test": "bun test",
+    "generate": "drizzle-kit generate",
+    "studio": "drizzle-kit studio",
+    "migrate": "bun src/db/drizzle/migrate.ts",
+    "seed": "bun src/db/drizzle/seed.ts"
+  },
+  "dependencies": {
+    "@biomejs/biome": "^1.8.3",
+    "@elysiajs/cookie": "^0.8.0",
+    "@elysiajs/jwt": "^1.0.2",
+    "@paralleldrive/cuid2": "^2.2.2",
+    "@typescript-eslint/eslint-plugin": "^7.16.0",
+    "@typescript-eslint/parser": "^7.16.0",
+    "dayjs": "^1.11.11",
+    "drizzle-orm": "^0.31.4",
+    "drizzle-typebox": "^0.1.1",
+    "elysia": "^1.0.27",
+    "eslint-plugin-drizzle": "^0.2.3",
+    "figlet": "^1.7.0",
+    "nodemailer": "^6.9.14",
+    "postgres": "^3.4.4",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@rocketseat/eslint-config": "^2.2.2",
+    "@types/bun": "^1.1.6",
+    "@types/figlet": "^1.5.8",
+    "@types/nodemailer": "^6.4.15",
+    "chalk": "^5.3.0",
+    "drizzle-kit": "^0.22.8",
+    "eslint": "^9.6.0",
+    "typescript": "^5.5.3"
+  }
+}
