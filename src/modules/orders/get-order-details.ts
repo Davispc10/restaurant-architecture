@@ -1,7 +1,7 @@
 import { Elysia, t } from 'elysia';
-import { auth } from '../auth';
-import { UnauthorizedError } from '../errors/unauthorized-error';
-import { db } from '../../db/drizzle/connection';
+import { auth } from '../../shared/infraestructure/http/middlewares/auth';
+import { UnauthorizedError } from '../../shared/application/errors/unauthorized-error';
+import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
 
 export const getOrderDetails = new Elysia().use(auth).get(
   '/orders/:orderId',

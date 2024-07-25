@@ -1,10 +1,10 @@
 import nodemailer from 'nodemailer';
 import Elysia, { t } from 'elysia';
-import { db } from '../../db/drizzle/connection';
-import { authLinks } from '../../db/drizzle/schema';
+import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
+import { authLinks } from '../../shared/infraestructure/persistence/drizzle/schema';
 import { createId } from '@paralleldrive/cuid2';
 import { env } from '../../env';
-import { mail } from '../../lib/mail';
+import { mail } from '../../shared/infraestructure/lib/mail';
 
 export const sendAuthLink = new Elysia().post(
   '/authenticate',

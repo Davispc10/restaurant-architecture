@@ -1,9 +1,9 @@
 import { Elysia, t } from 'elysia';
-import { auth } from '../auth';
-import { db } from '../../db/drizzle/connection';
-import { UnauthorizedError } from '../errors/unauthorized-error';
+import { auth } from '../../shared/infraestructure/http/middlewares/auth';
+import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
+import { UnauthorizedError } from '../../shared/application/errors/unauthorized-error';
 import { createSelectSchema } from 'drizzle-typebox';
-import { orders, users } from '../../db/drizzle/schema';
+import { orders, users } from '../../shared/infraestructure/persistence/drizzle/schema';
 import { and, count, desc, eq, ilike, sql } from 'drizzle-orm';
 
 export const getOrders = new Elysia().use(auth).get(
@@ -54,7 +54,7 @@ export const getOrders = new Elysia().use(auth).get(
               WHEN 'cancelled' THEN 99
             END`,
             desc(fields.createdAt)
-          ]
+          ];
         })
     ]);
 
@@ -65,7 +65,7 @@ export const getOrders = new Elysia().use(auth).get(
         perPage: 10,
         totalCount: amountOfOrders
       }
-    }
+    };
   },
   {
     query: t.Object({

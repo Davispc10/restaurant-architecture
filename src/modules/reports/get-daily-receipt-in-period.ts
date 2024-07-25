@@ -1,9 +1,9 @@
 import Elyia, { t } from 'elysia';
-import { auth } from '../auth';
+import { auth } from '../../shared/infraestructure/http/middlewares/auth';
 import dayjs from 'dayjs';
-import { UnauthorizedError } from '../errors/unauthorized-error';
-import { db } from '../../db/drizzle/connection';
-import { orders } from '../../db/drizzle/schema';
+import { UnauthorizedError } from '../../shared/application/errors/unauthorized-error';
+import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
+import { orders } from '../../shared/infraestructure/persistence/drizzle/schema';
 import { and, eq, gte, lte, sql, sum } from 'drizzle-orm';
 
 export const getDailyReceiptInPeriod = new Elyia().use(auth).get(

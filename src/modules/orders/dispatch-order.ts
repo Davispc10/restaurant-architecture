@@ -1,12 +1,12 @@
 import { Elysia, t } from 'elysia';
-import { auth } from '../auth';
-import { db } from '../../db/drizzle/connection';
-import { UnauthorizedError } from '../errors/unauthorized-error';
-import { orders } from '../../db/drizzle/schema';
+import { auth } from '../../shared/infraestructure/http/middlewares/auth';
+import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
+import { UnauthorizedError } from '../../shared/application/errors/unauthorized-error';
+import { orders } from '../../shared/infraestructure/persistence/drizzle/schema';
 import { eq } from 'drizzle-orm';
 
-export const deliverOrder = new Elysia().use(auth).patch(
-  '/orders/:orderId/deliver',
+export const dispatchOrder = new Elysia().use(auth).patch(
+  '/orders/:orderId/dispatch',
   async ({ getCurrentUser, params, set }) => {
     const { orderId } = params;
     const { restaurantId } = await getCurrentUser();
@@ -25,14 +25,12 @@ export const deliverOrder = new Elysia().use(auth).patch(
       return { message: 'Order not found.' };
     }
 
-    if (order.status !== 'delivering') {
+    if (order.status !== 'processing') {
       set.status = 400;
-      return { message: 'You cannot deliver orders that are not in "delivering" status.' };
+      return { message: 'You cannot dispatch orders that are not in "processing" status.' };
     }
 
-    await db.update(orders).set({ status: 'delivered' }).where(eq(orders.id, orderId));
-
-    return { message: 'Order approved.' };
+    await db.update(orders).set({ status: 'delivering' }).where(eq(orders.id, orderId));
   },
   {
     params: t.Object({

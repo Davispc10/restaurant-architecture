@@ -1,7 +1,7 @@
 import { Elysia } from 'elysia';
-import { auth } from '../auth';
-import { db } from '../../db/drizzle/connection';
-import { UnauthorizedError } from '../errors/unauthorized-error';
+import { auth } from '../../shared/infraestructure/http/middlewares/auth';
+import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
+import { UnauthorizedError } from '../../shared/application/errors/unauthorized-error';
 
 export const getProfile = new Elysia().use(auth).get('/me', async ({ getCurrentUser }) => {
   const { userId } = await getCurrentUser();

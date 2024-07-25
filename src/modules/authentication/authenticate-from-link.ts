@@ -1,8 +1,8 @@
 import Elysia, { t } from 'elysia';
-import { db } from '../../db/drizzle/connection';
+import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
 import dayjs from 'dayjs';
-import { auth } from '../auth';
-import { authLinks } from '../../db/drizzle/schema';
+import { auth } from '../../shared/infraestructure/http/middlewares/auth';
+import { authLinks } from '../../shared/infraestructure/persistence/drizzle/schema';
 import { eq } from 'drizzle-orm';
 
 export const authenticateFromLink = new Elysia().use(auth).get(

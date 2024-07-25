@@ -1,6 +1,6 @@
 import Elysia from 'elysia';
-import { auth } from '../auth';
-import { db } from '../../db/drizzle/connection';
+import { auth } from '../../shared/infraestructure/http/middlewares/auth';
+import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
 
 export const getManagedRestaurant = new Elysia()
   .use(auth)

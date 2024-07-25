@@ -1,6 +1,6 @@
 import Elysia, { t } from 'elysia';
-import { db } from '../../db/drizzle/connection';
-import { users, restaurants } from '../../db/drizzle/schema';
+import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
+import { users, restaurants } from '../../shared/infraestructure/persistence/drizzle/schema';
 
 export const registerRestaurant = new Elysia().post(
   '/restaurants',

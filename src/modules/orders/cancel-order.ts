@@ -1,12 +1,12 @@
 import { Elysia, t } from 'elysia';
-import { auth } from '../auth';
-import { db } from '../../db/drizzle/connection';
-import { UnauthorizedError } from '../errors/unauthorized-error';
-import { orders } from '../../db/drizzle/schema';
+import { auth } from '../../shared/infraestructure/http/middlewares/auth';
+import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
+import { UnauthorizedError } from '../../shared/application/errors/unauthorized-error';
+import { orders } from '../../shared/infraestructure/persistence/drizzle/schema';
 import { eq } from 'drizzle-orm';
 
-export const dispatchOrder = new Elysia().use(auth).patch(
-  '/orders/:orderId/dispatch',
+export const cancelOrder = new Elysia().use(auth).patch(
+  '/orders/:orderId/cancel',
   async ({ getCurrentUser, params, set }) => {
     const { orderId } = params;
     const { restaurantId } = await getCurrentUser();
@@ -25,12 +25,12 @@ export const dispatchOrder = new Elysia().use(auth).patch(
       return { message: 'Order not found.' };
     }
 
-    if (order.status !== 'processing') {
+    if (!['pending', 'processing'].includes(order.status)) {
       set.status = 400;
-      return { message: 'You cannot dispatch orders that are not in "processing" status.' };
+      return { message: 'You cannot cancel orders after dispatch.' };
     }
 
-    await db.update(orders).set({ status: 'delivering' }).where(eq(orders.id, orderId));
+    await db.update(orders).set({ status: 'cancelled' }).where(eq(orders.id, orderId));
   },
   {
     params: t.Object({
