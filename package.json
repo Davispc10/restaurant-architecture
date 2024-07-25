@@ -3,9 +3,9 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "dev": "bun --watch src/http/server.ts",
-    "build": "bun build src/http/server.ts",
-    "start": "NODE_ENV=production bun src/http/server.ts",
+    "dev": "bun --watch src/server.ts",
+    "build": "bun build src/server.ts",
+    "start": "NODE_ENV=production bun src/server.ts",
     "test": "bun test",
     "generate": "drizzle-kit generate",
     "studio": "drizzle-kit studio",
