@@ -1,10 +1,10 @@
 import Elysia from 'elysia';
-import { registerRestaurant } from './modules/restaurants/register-restaurant';
+import { registerRestaurant } from './modules/restaurants/infraestructure/web/rest/routes/registerRestaurant';
 import { sendAuthLink } from './modules/authentication/send-auth-link';
 import { authenticateFromLink } from './modules/authentication/authenticate-from-link';
 import { signOut } from './modules/authentication/sign-out';
 import { getProfile } from './modules/authentication/get-profile';
-import { getManagedRestaurant } from './modules/restaurants/get-managed-restaurant';
+import { getManagedRestaurant } from './modules/restaurants/infraestructure/web/rest/routes/get-managed-restaurant';
 import { getOrderDetails } from './modules/orders/get-order-details';
 import { approveOrder } from './modules/orders/approve-order';
 import { cancelOrder } from './modules/orders/cancel-order';
