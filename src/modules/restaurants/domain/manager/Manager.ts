@@ -1,11 +1,11 @@
 import { ManagerValidator } from './ManagerValidator';
 
 export type ManagerProps = {
-  id?: number;
+  id?: string;
   name: string;
   email: string;
-  phone: string;
-  role: 'manager';
+  phone?: string | null;
+  role: 'manager' | 'customer';
   createdAt?: Date | string | null;
   updatedAt?: Date | string | null;
 };

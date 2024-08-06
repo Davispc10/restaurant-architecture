@@ -1,3 +1,4 @@
+import { NotFoundError } from 'elysia';
 import { Manager } from '../../domain/manager/Manager';
 import { Restaurant } from '../../domain/restaurant/Restaurant';
 import type { CreateRestaurantInputPort } from '../port/in/CreateRestaurantInputPort';
@@ -20,9 +21,11 @@ export class CreateRestaurantUseCase implements CreateRestaurantInputPort {
     await this.validateRestaurantExists(restaurantName);
     const manager = new Manager({ name: managerName, email, phone, role: 'manager' });
     const managerCreated = await this.managerRepository.create(manager);
+    const { id } = managerCreated.getProps();
+    if (!id) throw new NotFoundError('Gerente não encontrado');
     const restaurant = new Restaurant({
       description: restaurantName,
-      managerId: managerCreated.getProps().id
+      managerId: id
     });
     await this.restaurantRepository.create(restaurant);
   }

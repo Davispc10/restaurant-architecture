@@ -1,25 +1,29 @@
 import { db } from '../../../../../shared/infraestructure/persistence/drizzle/connection';
-import { restaurants } from '../../../../../shared/infraestructure/persistence/drizzle/schema';
-import type { RestaurantRepository } from '../../../application/port/out/RestaurantRepository';
-import { Restaurant } from '../../../domain/restaurant/Restaurant';
+import { users } from '../../../../../shared/infraestructure/persistence/drizzle/schema';
+import type { ManagerRepository } from '../../../application/port/out/ManagerRepository';
+import { Manager } from '../../../domain/manager/Manager';
 
-class DrizzleRestaurantRepository implements RestaurantRepository {
-  constructor(private readonly restaurantModel = restaurants) {}
-
-  async create(restaurant: Restaurant): Promise<Restaurant> {
-    const { name, description, managerId } = restaurant.getProps();
-    const [restaurantStored] = await db
-      .insert(restaurants)
+export class DrizzleManagerRepository implements ManagerRepository {
+  async create(manager: Manager): Promise<Manager> {
+    const { name, email, phone, role } = manager.getProps();
+    const [managerStored] = await db
+      .insert(users)
       .values({
         name,
-        description,
-        managerId
+        email,
+        phone,
+        role
       })
       .returning();
-    return new Restaurant(restaurantStored);
+    return new Manager(managerStored);
   }
 
-  async findByName(restaurantName: string): Promise<Restaurant | null> {
-    return null;
+  async findById(managerId: string): Promise<Manager | null> {
+    const managerStored = await db.query.users.findFirst({
+      where(fields, { eq }) {
+        return eq(fields.id, managerId);
+      }
+    });
+    return managerStored ? new Manager(managerStored) : null;
   }
 }
