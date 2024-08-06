@@ -1,7 +1,7 @@
 import { ManagerValidator } from './ManagerValidator';
 
 export type ManagerProps = {
-  id?: string | null;
+  id?: number;
   name: string;
   email: string;
   phone: string;

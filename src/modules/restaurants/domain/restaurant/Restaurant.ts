@@ -1,9 +1,10 @@
 import { RestaurantValidator } from './RestaurantValidator';
 
 export type RestaurantProps = {
-  id?: string | null;
-  description: string;
-  managerId: number;
+  id?: string;
+  name: string;
+  description?: string | null;
+  managerId: string;
   createdAt?: Date | string | null;
   updatedAt?: Date | string | null;
 };

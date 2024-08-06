@@ -1,7 +1,8 @@
 import { Manager } from '../../domain/manager/Manager';
 import { Restaurant } from '../../domain/restaurant/Restaurant';
-import { RestaurantRepository } from '../domain/RestaurantRepository';
 import type { CreateRestaurantInputPort } from '../port/in/CreateRestaurantInputPort';
+import type { ManagerRepository } from '../port/out/ManagerRepository';
+import type { RestaurantRepository } from '../port/out/RestaurantRepository';
 import type { CreateRestaurantInput } from './input/CreateRestaurantInput';
 
 export class CreateRestaurantUseCase implements CreateRestaurantInputPort {
@@ -17,11 +18,13 @@ export class CreateRestaurantUseCase implements CreateRestaurantInputPort {
     phone
   }: CreateRestaurantInput): Promise<void> {
     await this.validateRestaurantExists(restaurantName);
-    // await this.validateManagerExists(managerName);
     const manager = new Manager({ name: managerName, email, phone, role: 'manager' });
-    const managerSaved = await managerRepository.save(manager);
-    const restaurant = new Restaurant({ description: restaurantName, managerId: managerSaved.id });
-    await this.restaurantRepository.save(restaurant);
+    const managerCreated = await this.managerRepository.create(manager);
+    const restaurant = new Restaurant({
+      description: restaurantName,
+      managerId: managerCreated.getProps().id
+    });
+    await this.restaurantRepository.create(restaurant);
   }
 
   private async validateRestaurantExists(restaurantName: string): Promise<void> {
