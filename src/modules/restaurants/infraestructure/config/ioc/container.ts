@@ -2,6 +2,7 @@ import { container } from 'tsyringe';
 import { CreateRestaurantUseCase } from '../../../application/usecase/CreateRestaurantUseCase';
 import { DrizzleRestaurantRepository } from '../../persistence/drizzle/DrizzleRestaurantRepository';
 import { DrizzleManagerRepository } from '../../persistence/drizzle/DrizzleManagerRepository';
+import { GetManagedRestaurantUseCase } from '../../../application/usecase/GetManagedRestaurantUseCase';
 
 // Application Output Ports
 container.register('RestaurantRepository', {
@@ -18,4 +19,8 @@ container.register('CreateRestaurantInputPort', {
     container.resolve('RestaurantRepository'),
     container.resolve('ManagerRepository')
   )
+});
+
+container.register('GetManagedRestaurantInputPort', {
+  useValue: new GetManagedRestaurantUseCase(container.resolve('RestaurantRepository'))
 });

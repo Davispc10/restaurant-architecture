@@ -24,7 +24,7 @@ export class CreateRestaurantUseCase implements CreateRestaurantInputPort {
     const { id } = managerCreated.getProps();
     if (!id) throw new NotFoundError('Gerente não encontrado');
     const restaurant = new Restaurant({
-      description: restaurantName,
+      name: restaurantName,
       managerId: id
     });
     await this.restaurantRepository.create(restaurant);

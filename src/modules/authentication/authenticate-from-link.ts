@@ -1,7 +1,7 @@
 import Elysia, { t } from 'elysia';
 import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
 import dayjs from 'dayjs';
-import { auth } from '../../shared/infraestructure/http/middlewares/auth';
+import { auth } from '../../shared/infraestructure/web/rest/middlewares/auth';
 import { authLinks } from '../../shared/infraestructure/persistence/drizzle/schema';
 import { eq } from 'drizzle-orm';
 

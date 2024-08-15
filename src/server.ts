@@ -1,10 +1,10 @@
 import Elysia from 'elysia';
-import { registerRestaurant } from './modules/restaurants/infraestructure/web/rest/routes/registerRestaurant';
+import { registerRestaurantRoute } from './modules/restaurants/infraestructure/web/rest/routes/registerRestaurantRoute';
 import { sendAuthLink } from './modules/authentication/send-auth-link';
 import { authenticateFromLink } from './modules/authentication/authenticate-from-link';
 import { signOut } from './modules/authentication/sign-out';
 import { getProfile } from './modules/authentication/get-profile';
-import { getManagedRestaurant } from './modules/restaurants/infraestructure/web/rest/routes/get-managed-restaurant';
+import { getManagedRestaurantRoute } from './modules/restaurants/infraestructure/web/rest/routes/getManagedRestaurantRoute';
 import { getOrderDetails } from './modules/orders/get-order-details';
 import { approveOrder } from './modules/orders/approve-order';
 import { cancelOrder } from './modules/orders/cancel-order';
@@ -20,12 +20,12 @@ import { getPopularProducts } from './modules/reports/get-popular-products';
 import chalk from 'chalk';
 
 const app = new Elysia()
-  .use(registerRestaurant)
+  .use(registerRestaurantRoute)
   .use(sendAuthLink)
   .use(authenticateFromLink)
   .use(signOut)
   .use(getProfile)
-  .use(getManagedRestaurant)
+  .use(getManagedRestaurantRoute)
   .use(getOrderDetails)
   .use(approveOrder)
   .use(cancelOrder)

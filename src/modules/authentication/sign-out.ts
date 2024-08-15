@@ -1,5 +1,5 @@
 import Elysia from 'elysia';
-import { auth } from '../../shared/infraestructure/http/middlewares/auth';
+import { auth } from '../../shared/infraestructure/web/rest/middlewares/auth';
 
 export const signOut = new Elysia()
   .use(auth)

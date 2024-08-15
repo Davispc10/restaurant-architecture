@@ -1,5 +1,5 @@
 import { Elysia } from 'elysia';
-import { auth } from '../../shared/infraestructure/http/middlewares/auth';
+import { auth } from '../../shared/infraestructure/web/rest/middlewares/auth';
 import { UnauthorizedError } from '../../shared/application/errors/unauthorized-error';
 import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
 import {

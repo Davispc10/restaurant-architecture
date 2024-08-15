@@ -1,11 +1,11 @@
-import { z } from 'zod';
+import { t } from 'elysia';
 
 export class CreateRestaurantInput {
-  static schema = z.object({
-    restaurantName: z.string(),
-    managerName: z.string(),
-    email: z.string(),
-    phone: z.string()
+  static schema = t.Object({
+    restaurantName: t.String(),
+    managerName: t.String(),
+    email: t.String(),
+    phone: t.String()
   });
 
   private constructor(
