@@ -7,7 +7,7 @@ import chalk from 'chalk';
 const connection = postgres(env.DATABASE_URL, { max: 1 });
 const db = drizzle(connection);
 
-await migrate(db, { migrationsFolder: 'src/db/drizzle/sql' });
+await migrate(db, { migrationsFolder: './src/shared/infraestructure/persistence/drizzle/sql' });
 
 console.log(chalk.greenBright('Migration successful!'));
 await connection.end();
