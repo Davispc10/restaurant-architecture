@@ -1,7 +1,7 @@
 import jwt from '@elysiajs/jwt';
 import Elysia, { t, type Static } from 'elysia';
 import { env } from '../../../../../env';
-import { UnauthorizedError } from '../../../../application/errors/unauthorized-error';
+import { UnauthorizedError } from '../../../error/UnauthorizedError';
 
 const jwtPayload = t.Object({
   sub: t.String(),
@@ -9,16 +9,6 @@ const jwtPayload = t.Object({
 });
 
 export const auth = new Elysia()
-  .error({
-    UNAUTHORIZED: UnauthorizedError
-  })
-  .onError(({ error, code, set }) => {
-    switch (code) {
-      case 'UNAUTHORIZED':
-        set.status = 401;
-        return { code, message: error.message };
-    }
-  })
   .use(
     jwt({
       secret: env.JWT_SECRET_KEY,
@@ -39,7 +29,7 @@ export const auth = new Elysia()
         auth.remove();
       },
       getCurrentUser: async () => {
-        const payload = await jwt.verify(auth.value);
+        const payload = (await jwt.verify(auth.value)) as Static<typeof jwtPayload>;
 
         if (!payload) {
           throw new UnauthorizedError();

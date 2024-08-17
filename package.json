@@ -3,7 +3,7 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "dev": "bun --watch src/server.ts",
+    "dev": "bun --inspect --watch src/server.ts",
     "build": "bun build src/server.ts",
     "start": "NODE_ENV=production bun src/server.ts",
     "test": "bun test",
@@ -17,6 +17,7 @@
     "@elysiajs/cookie": "^0.8.0",
     "@elysiajs/jwt": "^1.0.2",
     "@paralleldrive/cuid2": "^2.2.2",
+    "@sinclair/typebox": "^0.33.7",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
     "@typescript-eslint/parser": "^7.16.0",
     "dayjs": "^1.11.11",

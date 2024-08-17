@@ -1,7 +1,7 @@
 import { Elysia, t } from 'elysia';
 import { auth } from '../../shared/infraestructure/web/rest/middlewares/auth';
 import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
-import { UnauthorizedError } from '../../shared/application/errors/unauthorized-error';
+import { UnauthorizedError } from '../../shared/infraestructure/error/UnauthorizedError';
 import { orders } from '../../shared/infraestructure/persistence/drizzle/schema';
 import { eq } from 'drizzle-orm';
 

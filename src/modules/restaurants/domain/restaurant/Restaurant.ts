@@ -1,4 +1,4 @@
-import { RestaurantValidator } from './RestaurantValidator';
+import { restaurantValidator } from './restaurantValidator';
 
 export type RestaurantProps = {
   id?: string;
@@ -17,7 +17,7 @@ export class Restaurant {
   }
 
   validateProps(): void {
-    RestaurantValidator.parse(this.props);
+    restaurantValidator(this.props);
   }
 
   getProps(): RestaurantProps {

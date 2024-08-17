@@ -1,7 +1,7 @@
 import Elyia from 'elysia';
 import { auth } from '../../shared/infraestructure/web/rest/middlewares/auth';
 import dayjs from 'dayjs';
-import { UnauthorizedError } from '../../shared/application/errors/unauthorized-error';
+import { UnauthorizedError } from '../../shared/infraestructure/error/UnauthorizedError';
 import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
 import { orders } from '../../shared/infraestructure/persistence/drizzle/schema';
 import { and, count, eq, gte, sql } from 'drizzle-orm';

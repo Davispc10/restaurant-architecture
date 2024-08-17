@@ -18,6 +18,8 @@ import { getMonthCanceledOrdersAmount } from './modules/reports/get-month-cancel
 import { getDailyReceiptInPeriod } from './modules/reports/get-daily-receipt-in-period';
 import { getPopularProducts } from './modules/reports/get-popular-products';
 import chalk from 'chalk';
+import './shared/infraestructure/lib/tsyringe';
+import { RestaurantExistsError } from './modules/restaurants/application/usecase/error/RestaurantExistsError';
 
 const app = new Elysia()
   .use(registerRestaurantRoute)
@@ -38,7 +40,9 @@ const app = new Elysia()
   .use(getMonthCanceledOrdersAmount)
   .use(getDailyReceiptInPeriod)
   .use(getPopularProducts)
+  .error('RestaurantExistsError', RestaurantExistsError)
   .onError(({ code, error, set }) => {
+    console.log('oi, error', error);
     switch (code) {
       case 'VALIDATION': {
         set.status = error.status;

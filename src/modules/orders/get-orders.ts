@@ -1,7 +1,7 @@
 import { Elysia, t } from 'elysia';
 import { auth } from '../../shared/infraestructure/web/rest/middlewares/auth';
 import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
-import { UnauthorizedError } from '../../shared/application/errors/unauthorized-error';
+import { UnauthorizedError } from '../../shared/infraestructure/error/UnauthorizedError';
 import { createSelectSchema } from 'drizzle-typebox';
 import { orders, users } from '../../shared/infraestructure/persistence/drizzle/schema';
 import { and, count, desc, eq, ilike, sql } from 'drizzle-orm';

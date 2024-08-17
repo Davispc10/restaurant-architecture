@@ -8,15 +8,10 @@ export const getManagedRestaurantRoute = new Elysia()
   .use(auth)
   .get('/managed-restaurant', async ({ getCurrentUser }) => {
     const { restaurantId } = await getCurrentUser();
-    if (!restaurantId) {
-      throw new Error('User is not a manager');
-    }
-
     const inputPort = container.resolve<GetManagedRestaurantInputPort>(
       'GetManagedRestaurantInputPort'
     );
     const response = await inputPort.execute({ restaurantId });
-
     return {
       message: Messages.GET_RESTAURANT_SUCCESS_MESSAGE,
       response

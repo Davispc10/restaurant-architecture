@@ -1,4 +1,4 @@
-import { ManagerValidator } from './ManagerValidator';
+import { managerValidator } from './managerValidator';
 
 export type ManagerProps = {
   id?: string;
@@ -18,7 +18,7 @@ export class Manager {
   }
 
   validateProps(): void {
-    ManagerValidator.parse(this.props);
+    managerValidator(this.props);
   }
 
   getProps(): ManagerProps {

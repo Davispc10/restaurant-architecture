@@ -1,6 +1,6 @@
 import { Elysia, t } from 'elysia';
 import { auth } from '../../shared/infraestructure/web/rest/middlewares/auth';
-import { UnauthorizedError } from '../../shared/application/errors/unauthorized-error';
+import { UnauthorizedError } from '../../shared/infraestructure/error/UnauthorizedError';
 import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
 
 export const getOrderDetails = new Elysia().use(auth).get(
