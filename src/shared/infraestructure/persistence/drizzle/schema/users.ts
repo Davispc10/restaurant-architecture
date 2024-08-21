@@ -1,7 +1,7 @@
 import { text, timestamp, pgTable, pgEnum } from 'drizzle-orm/pg-core';
 import { createId } from '@paralleldrive/cuid2';
 import { relations } from 'drizzle-orm';
-import { restaurants } from './restaurants';
+import { restaurants } from '../../../../../modules/restaurants/infraestructure/persistence/drizzle/schema/restaurants';
 import { orders } from './orders';
 export const userRoleEnum = pgEnum('user_role', ['manager', 'customer']);
 

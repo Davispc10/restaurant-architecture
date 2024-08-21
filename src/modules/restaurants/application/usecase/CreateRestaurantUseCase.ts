@@ -4,9 +4,8 @@ import { Restaurant } from '../../domain/restaurant/Restaurant';
 import type { CreateRestaurantInputPort } from '../port/in/CreateRestaurantInputPort';
 import type { ManagerRepository } from '../port/out/ManagerRepository';
 import type { RestaurantRepository } from '../port/out/RestaurantRepository';
-import type { CreateRestaurantInput } from './input/CreateRestaurantInput';
+import type { CreateRestaurantInput } from '../port/in/models/input/CreateRestaurantInput';
 import { RestaurantExistsError } from './error/RestaurantExistsError';
-import ModuleErrorHandler from '../../../../shared/infraestructure/moduleErrorHandler/ModuleErrorHandler';
 
 export class CreateRestaurantUseCase implements CreateRestaurantInputPort {
   constructor(
@@ -14,7 +13,6 @@ export class CreateRestaurantUseCase implements CreateRestaurantInputPort {
     private readonly managerRepository: ManagerRepository
   ) {}
 
-  @ModuleErrorHandler()
   async execute({
     restaurantName,
     managerName,

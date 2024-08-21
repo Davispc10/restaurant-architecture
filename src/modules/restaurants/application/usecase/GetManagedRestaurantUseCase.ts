@@ -2,14 +2,12 @@ import { ManagedRestaurantError } from './error/ManagedRestaurantError';
 import { UserNotManagerError } from './error/UserNotManagerError';
 import type { GetManagedRestaurantInputPort } from '../port/in/GetManagedRestaurantInputPort';
 import type { RestaurantRepository } from '../port/out/RestaurantRepository';
-import type { GetManagedRestaurantInput } from './input/GetManagedRestaurantInput';
-import { GetManagedRestaurantOutput } from './out/GetManagedRestaurantOutput';
-import ModuleErrorHandler from '../../../../shared/infraestructure/moduleErrorHandler/ModuleErrorHandler';
+import type { GetManagedRestaurantInput } from '../port/in/models/input/GetManagedRestaurantInput';
+import { RestaurantOutput } from '../port/in/models/output/RestaurantOutput';
 
 export class GetManagedRestaurantUseCase implements GetManagedRestaurantInputPort {
   constructor(private readonly restaurantRepository: RestaurantRepository) {}
-  @ModuleErrorHandler()
-  async execute({ restaurantId }: GetManagedRestaurantInput): Promise<GetManagedRestaurantOutput> {
+  async execute({ restaurantId }: GetManagedRestaurantInput): Promise<RestaurantOutput> {
     if (!restaurantId) {
       throw new UserNotManagerError();
     }
@@ -17,6 +15,6 @@ export class GetManagedRestaurantUseCase implements GetManagedRestaurantInputPor
     if (!restaurant) {
       throw new ManagedRestaurantError();
     }
-    return GetManagedRestaurantOutput.from(restaurant);
+    return RestaurantOutput.from(restaurant);
   }
 }

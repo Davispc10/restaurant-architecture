@@ -1,5 +1,5 @@
 import { db } from '../../../../../shared/infraestructure/persistence/drizzle/connection';
-import { restaurants } from '../../../../../shared/infraestructure/persistence/drizzle/schema/restaurants';
+import { restaurants } from './schema/restaurants';
 import type { RestaurantRepository } from '../../../application/port/out/RestaurantRepository';
 import { Restaurant } from '../../../domain/restaurant/Restaurant';
 

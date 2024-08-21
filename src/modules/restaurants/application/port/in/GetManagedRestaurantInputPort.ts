@@ -1,6 +1,6 @@
-import type { GetManagedRestaurantInput } from '../../usecase/input/GetManagedRestaurantInput';
-import type { GetManagedRestaurantOutput } from '../../usecase/out/GetManagedRestaurantOutput';
+import type { GetManagedRestaurantInput } from './models/input/GetManagedRestaurantInput';
+import type { RestaurantOutput } from './models/output/RestaurantOutput';
 
 export interface GetManagedRestaurantInputPort {
-  execute(input: GetManagedRestaurantInput): Promise<GetManagedRestaurantOutput>;
+  execute(input: GetManagedRestaurantInput): Promise<RestaurantOutput>;
 }

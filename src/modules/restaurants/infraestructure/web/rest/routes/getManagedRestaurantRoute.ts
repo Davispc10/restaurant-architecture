@@ -3,17 +3,25 @@ import { auth } from '../../../../../../shared/infraestructure/web/rest/middlewa
 import { container } from 'tsyringe';
 import type { GetManagedRestaurantInputPort } from '../../../../application/port/in/GetManagedRestaurantInputPort';
 import { Messages } from '../../common/Messages';
+import ModuleErrorHandler from '../../../../../../shared/infraestructure/moduleErrorHandler/ModuleErrorHandler';
+
+class GetManagedRestaurant {
+  @ModuleErrorHandler()
+  public static async getManagedRestaurant(restaurantId: string | undefined) {
+    const inputPort = container.resolve<GetManagedRestaurantInputPort>(
+      'GetManagedRestaurantInputPort'
+    );
+    const output = await inputPort.execute({ restaurantId });
+    return {
+      message: Messages.GET_RESTAURANT_SUCCESS_MESSAGE,
+      response: output
+    };
+  }
+}
 
 export const getManagedRestaurantRoute = new Elysia()
   .use(auth)
   .get('/managed-restaurant', async ({ getCurrentUser }) => {
     const { restaurantId } = await getCurrentUser();
-    const inputPort = container.resolve<GetManagedRestaurantInputPort>(
-      'GetManagedRestaurantInputPort'
-    );
-    const response = await inputPort.execute({ restaurantId });
-    return {
-      message: Messages.GET_RESTAURANT_SUCCESS_MESSAGE,
-      response
-    };
+    return GetManagedRestaurant.getManagedRestaurant(restaurantId);
   });

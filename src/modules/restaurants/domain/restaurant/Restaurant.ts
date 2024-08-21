@@ -1,26 +1,33 @@
-import { restaurantValidator } from './restaurantValidator';
-
-export type RestaurantProps = {
-  id?: string;
-  name: string;
-  description?: string | null;
-  managerId: string;
-  createdAt?: Date | string | null;
-  updatedAt?: Date | string | null;
-};
-
 export class Restaurant {
-  constructor(private readonly props: RestaurantProps) {
-    this.validateProps();
-    this.props.createdAt = this.props.createdAt ?? new Date();
-    this.props.updatedAt = this.props.updatedAt ?? new Date();
+  private constructor(
+    private readonly id: number | null,
+    private name: string,
+    private cnpj: string,
+    private readonly createdAt: Date,
+    private readonly updatedAt: Date
+  ) {}
+
+  public static create(name: string, cnpj: string): Restaurant {
+    return new Restaurant(null, name, cnpj, new Date(), new Date());
   }
 
-  validateProps(): void {
-    restaurantValidator(this.props);
+  public static from(
+    id: number,
+    createdAt: Date,
+    name: string,
+    cnpj: string,
+    updatedAt: Date
+  ): Restaurant {
+    return new Restaurant(id, name, cnpj, createdAt, updatedAt);
   }
 
-  getProps(): RestaurantProps {
-    return JSON.parse(JSON.stringify(this.props));
+  public toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+      cnpj: this.cnpj,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt
+    };
   }
 }

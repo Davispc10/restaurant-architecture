@@ -1,9 +1,9 @@
 import { text, timestamp, pgTable } from 'drizzle-orm/pg-core';
 import { createId } from '@paralleldrive/cuid2';
 import { relations } from 'drizzle-orm';
-import { orders } from './orders';
-import { products } from './products';
-import { users } from './users';
+import { orders } from '../../../../../../shared/infraestructure/persistence/drizzle/schema/orders';
+import { products } from '../../../../../../shared/infraestructure/persistence/drizzle/schema/products';
+import { users } from '../../../../../../shared/infraestructure/persistence/drizzle/schema/users';
 
 export const restaurants = pgTable('restaurants', {
   id: text('id')

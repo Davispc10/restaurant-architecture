@@ -1,6 +1,6 @@
 import Elysia from 'elysia';
 import { container } from 'tsyringe';
-import { CreateRestaurantInput } from '../../../../application/usecase/input/CreateRestaurantInput';
+import { CreateRestaurantInput } from '../../../../application/port/in/models/input/CreateRestaurantInput';
 import type { CreateRestaurantInputPort } from '../../../../application/port/in/CreateRestaurantInputPort';
 import { Messages } from '../../common/Messages';
 

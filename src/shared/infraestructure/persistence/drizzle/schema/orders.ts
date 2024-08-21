@@ -2,7 +2,7 @@ import { text, timestamp, pgTable, pgEnum, integer } from 'drizzle-orm/pg-core';
 import { createId } from '@paralleldrive/cuid2';
 import { relations } from 'drizzle-orm';
 import { ordersItems } from './order-items';
-import { restaurants } from './restaurants';
+import { restaurants } from '../../../../../modules/restaurants/infraestructure/persistence/drizzle/schema/restaurants';
 import { users } from './users';
 
 export const orderStatusEnum = pgEnum('order_status', [

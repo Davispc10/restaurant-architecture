@@ -1,6 +1,6 @@
 import { text, timestamp, pgTable, integer } from 'drizzle-orm/pg-core';
 import { createId } from '@paralleldrive/cuid2';
-import { restaurants } from './restaurants';
+import { restaurants } from '../../../../../modules/restaurants/infraestructure/persistence/drizzle/schema/restaurants';
 import { relations } from 'drizzle-orm';
 import { ordersItems } from './order-items';
 
