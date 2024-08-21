@@ -1,10 +1,10 @@
 import Elysia from 'elysia';
-import { registerRestaurantRoute } from './modules/restaurants/infraestructure/web/rest/routes/registerRestaurantRoute';
+import { registerRestaurantRoute } from './modules/restaurants/infraestructure/web/rest/registerRestaurantRoute';
 import { sendAuthLink } from './modules/authentication/send-auth-link';
 import { authenticateFromLink } from './modules/authentication/authenticate-from-link';
 import { signOut } from './modules/authentication/sign-out';
 import { getProfile } from './modules/authentication/get-profile';
-import { getManagedRestaurantRoute } from './modules/restaurants/infraestructure/web/rest/routes/getManagedRestaurantRoute';
+import { getManagedRestaurantRoute } from './modules/restaurants/infraestructure/web/rest/getManagedRestaurantRoute';
 import { getOrderDetails } from './modules/orders/get-order-details';
 import { approveOrder } from './modules/orders/approve-order';
 import { cancelOrder } from './modules/orders/cancel-order';
@@ -19,7 +19,6 @@ import { getDailyReceiptInPeriod } from './modules/reports/get-daily-receipt-in-
 import { getPopularProducts } from './modules/reports/get-popular-products';
 import chalk from 'chalk';
 import './shared/infraestructure/lib/tsyringe';
-import { RestaurantExistsError } from './modules/restaurants/application/usecase/error/RestaurantExistsError';
 
 const app = new Elysia()
   .use(registerRestaurantRoute)
@@ -40,7 +39,6 @@ const app = new Elysia()
   .use(getMonthCanceledOrdersAmount)
   .use(getDailyReceiptInPeriod)
   .use(getPopularProducts)
-  .error('RestaurantExistsError', RestaurantExistsError)
   .onError(({ code, error, set }) => {
     console.log('oi, error', error);
     switch (code) {

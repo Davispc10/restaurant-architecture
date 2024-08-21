@@ -1,13 +1,13 @@
 import Elysia from 'elysia';
-import { auth } from '../../../../../../shared/infraestructure/web/rest/middlewares/auth';
+import { auth } from '../../../../../shared/infraestructure/web/rest/middlewares/auth';
 import { container } from 'tsyringe';
-import type { GetManagedRestaurantInputPort } from '../../../../application/port/in/GetManagedRestaurantInputPort';
-import { Messages } from '../../common/Messages';
-import ModuleErrorHandler from '../../../../../../shared/infraestructure/moduleErrorHandler/ModuleErrorHandler';
+import type { GetManagedRestaurantInputPort } from '../../../application/port/in/GetManagedRestaurantInputPort';
+import { Messages } from '../common/Messages';
+import ModuleErrorHandler from '../../../../../shared/infraestructure/moduleErrorHandler/ModuleErrorHandler';
 
 class GetManagedRestaurant {
   @ModuleErrorHandler()
-  public static async getManagedRestaurant(restaurantId: string | undefined) {
+  static async getManagedRestaurant(restaurantId: string | undefined) {
     const inputPort = container.resolve<GetManagedRestaurantInputPort>(
       'GetManagedRestaurantInputPort'
     );

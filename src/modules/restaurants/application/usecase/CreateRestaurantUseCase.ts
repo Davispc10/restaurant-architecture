@@ -5,7 +5,7 @@ import type { CreateRestaurantInputPort } from '../port/in/CreateRestaurantInput
 import type { ManagerRepository } from '../port/out/ManagerRepository';
 import type { RestaurantRepository } from '../port/out/RestaurantRepository';
 import type { CreateRestaurantInput } from '../port/in/models/input/CreateRestaurantInput';
-import { RestaurantExistsError } from './error/RestaurantExistsError';
+import { ConflictError } from '../../../../shared/infraestructure/error/ConflictError';
 
 export class CreateRestaurantUseCase implements CreateRestaurantInputPort {
   constructor(
@@ -20,21 +20,18 @@ export class CreateRestaurantUseCase implements CreateRestaurantInputPort {
     phone
   }: CreateRestaurantInput): Promise<void> {
     await this.validateRestaurantExists(restaurantName);
-    const manager = new Manager({ name: managerName, email, phone, role: 'manager' });
+    const manager = Manager.create(managerName, email, phone, 'manager');
     const managerCreated = await this.managerRepository.create(manager);
-    const { id: managerId } = managerCreated.getProps();
+    const { id: managerId } = managerCreated.toJSON();
     if (!managerId) throw new NotFoundError('Gerente não encontrado');
-    const restaurant = new Restaurant({
-      name: restaurantName,
-      managerId
-    });
+    const restaurant = Restaurant.create(restaurantName, null, managerId);
     await this.restaurantRepository.create(restaurant);
   }
 
   private async validateRestaurantExists(restaurantName: string): Promise<void> {
     const existingRestaurant = await this.restaurantRepository.findByName(restaurantName);
     if (existingRestaurant) {
-      throw new RestaurantExistsError();
+      throw new ConflictError('Restaurant already exists.');
     }
   }
 }

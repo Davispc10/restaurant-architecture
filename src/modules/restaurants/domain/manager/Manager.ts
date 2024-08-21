@@ -1,27 +1,40 @@
-import { managerValidator } from './managerValidator';
-
-export type ManagerProps = {
-  id?: string;
-  name: string;
-  email: string;
-  phone?: string | null;
-  role: 'manager' | 'customer';
-  createdAt?: Date | string | null;
-  updatedAt?: Date | string | null;
-};
-
+type Role = 'manager' | 'customer';
 export class Manager {
-  constructor(private readonly props: ManagerProps) {
-    this.validateProps();
-    this.props.createdAt = this.props.createdAt ?? new Date();
-    this.props.updatedAt = this.props.updatedAt ?? new Date();
+  private constructor(
+    private readonly id: string | null,
+    private name: string,
+    private email: string,
+    private phone: string | null,
+    private role: Role,
+    private readonly createdAt?: Date,
+    private readonly updatedAt?: Date
+  ) {}
+
+  public static create(name: string, email: string, phone: string | null, role: Role): Manager {
+    return new Manager(null, name, email, phone, role, new Date(), new Date());
   }
 
-  validateProps(): void {
-    managerValidator(this.props);
+  public static from(
+    id: string,
+    name: string,
+    email: string,
+    phone: string | null,
+    role: Role,
+    createdAt: Date,
+    updatedAt: Date
+  ): Manager {
+    return new Manager(id, name, email, phone, role, createdAt, updatedAt);
   }
 
-  getProps(): ManagerProps {
-    return JSON.parse(JSON.stringify(this.props));
+  public toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      phone: this.phone,
+      role: this.role,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt
+    };
   }
 }

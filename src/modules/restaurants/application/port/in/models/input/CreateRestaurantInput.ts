@@ -16,12 +16,11 @@ export class CreateRestaurantInput {
   ) {}
 
   public static from(payload: CreateRestaurantInput) {
-    const validatedData = CreateRestaurantInput.schema.parse(payload);
     return new CreateRestaurantInput(
-      validatedData.restaurantName,
-      validatedData.managerName,
-      validatedData.email,
-      validatedData.phone
+      payload.restaurantName,
+      payload.managerName,
+      payload.email,
+      payload.phone
     );
   }
 }

@@ -9,19 +9,10 @@ export default function ModuleErrorHandler(): MethodDecorator {
     const originalMethod = descriptor.value;
 
     descriptor.value = async function (...args: any[]): Promise<void> {
-      // const errorLogger: ErrorLogger = container.resolve('ErrorLogger');
       try {
         return await originalMethod.apply(this, args);
       } catch (error) {
         if (error instanceof TypeBoxError) throw new ValidationError(error, error.stack ?? '');
-        // {
-        //   status: 424,
-        //   error,
-        //   stack: error.stack,
-        //   message: error.message,
-        //   cause: error.cause
-        // };
-        // logError(errorLogger, error as Error, args, this);
         console.error(error as Error, args, this);
         handleCommonHttpError(error as Error);
       }

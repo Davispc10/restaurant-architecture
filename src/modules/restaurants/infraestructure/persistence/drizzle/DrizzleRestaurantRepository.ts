@@ -5,7 +5,7 @@ import { Restaurant } from '../../../domain/restaurant/Restaurant';
 
 export class DrizzleRestaurantRepository implements RestaurantRepository {
   async create(restaurant: Restaurant): Promise<Restaurant> {
-    const { name, description, managerId } = restaurant.getProps();
+    const { name, description, managerId } = restaurant.toJSON();
     const [restaurantStored] = await db
       .insert(restaurants)
       .values({
@@ -14,7 +14,14 @@ export class DrizzleRestaurantRepository implements RestaurantRepository {
         managerId
       })
       .returning();
-    return new Restaurant(restaurantStored);
+    return Restaurant.from(
+      restaurantStored.id,
+      restaurantStored.name,
+      restaurantStored.description,
+      restaurantStored.managerId,
+      restaurantStored.createdAt,
+      restaurantStored.updatedAt
+    );
   }
 
   async findById(restaurantId: string): Promise<Restaurant | null> {
@@ -23,7 +30,16 @@ export class DrizzleRestaurantRepository implements RestaurantRepository {
         return eq(fields.id, restaurantId);
       }
     });
-    return restaurantStored ? new Restaurant(restaurantStored) : null;
+    return restaurantStored
+      ? Restaurant.from(
+          restaurantStored.id,
+          restaurantStored.name,
+          restaurantStored.description,
+          restaurantStored.managerId,
+          restaurantStored.createdAt,
+          restaurantStored.updatedAt
+        )
+      : null;
   }
 
   async findByName(restaurantName: string): Promise<Restaurant | null> {
@@ -32,6 +48,15 @@ export class DrizzleRestaurantRepository implements RestaurantRepository {
         return eq(fields.name, restaurantName);
       }
     });
-    return restaurantStored ? new Restaurant(restaurantStored) : null;
+    return restaurantStored
+      ? Restaurant.from(
+          restaurantStored.id,
+          restaurantStored.name,
+          restaurantStored.description,
+          restaurantStored.managerId,
+          restaurantStored.createdAt,
+          restaurantStored.updatedAt
+        )
+      : null;
   }
 }

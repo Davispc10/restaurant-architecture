@@ -5,7 +5,7 @@ import { Manager } from '../../../domain/manager/Manager';
 
 export class DrizzleManagerRepository implements ManagerRepository {
   async create(manager: Manager): Promise<Manager> {
-    const { name, email, phone, role } = manager.getProps();
+    const { name, email, phone, role } = manager.toJSON();
     const [managerStored] = await db
       .insert(users)
       .values({
@@ -15,7 +15,15 @@ export class DrizzleManagerRepository implements ManagerRepository {
         role
       })
       .returning();
-    return new Manager(managerStored);
+    return Manager.from(
+      managerStored.id,
+      managerStored.name,
+      managerStored.email,
+      managerStored.phone,
+      managerStored.role,
+      managerStored.createdAt,
+      managerStored.updatedAt
+    );
   }
 
   async findById(managerId: string): Promise<Manager | null> {
@@ -24,6 +32,13 @@ export class DrizzleManagerRepository implements ManagerRepository {
         return eq(fields.id, managerId);
       }
     });
-    return managerStored ? new Manager(managerStored) : null;
+    return managerStored
+      ? Manager.create(
+          managerStored.name,
+          managerStored.email,
+          managerStored.phone,
+          managerStored.role
+        )
+      : null;
   }
 }
