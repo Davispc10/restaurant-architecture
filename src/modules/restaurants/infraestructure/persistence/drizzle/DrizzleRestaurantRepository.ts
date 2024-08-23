@@ -14,14 +14,7 @@ export class DrizzleRestaurantRepository implements RestaurantRepository {
         managerId
       })
       .returning();
-    return Restaurant.from(
-      restaurantStored.id,
-      restaurantStored.name,
-      restaurantStored.description,
-      restaurantStored.managerId,
-      restaurantStored.createdAt,
-      restaurantStored.updatedAt
-    );
+    return this.toEntity(restaurantStored);
   }
 
   async findById(restaurantId: string): Promise<Restaurant | null> {
@@ -30,16 +23,7 @@ export class DrizzleRestaurantRepository implements RestaurantRepository {
         return eq(fields.id, restaurantId);
       }
     });
-    return restaurantStored
-      ? Restaurant.from(
-          restaurantStored.id,
-          restaurantStored.name,
-          restaurantStored.description,
-          restaurantStored.managerId,
-          restaurantStored.createdAt,
-          restaurantStored.updatedAt
-        )
-      : null;
+    return restaurantStored ? this.toEntity(restaurantStored) : null;
   }
 
   async findByName(restaurantName: string): Promise<Restaurant | null> {
@@ -48,15 +32,17 @@ export class DrizzleRestaurantRepository implements RestaurantRepository {
         return eq(fields.name, restaurantName);
       }
     });
-    return restaurantStored
-      ? Restaurant.from(
-          restaurantStored.id,
-          restaurantStored.name,
-          restaurantStored.description,
-          restaurantStored.managerId,
-          restaurantStored.createdAt,
-          restaurantStored.updatedAt
-        )
-      : null;
+    return restaurantStored ? this.toEntity(restaurantStored) : null;
+  }
+
+  private toEntity(restaurantModel: typeof restaurants.$inferSelect): Restaurant {
+    return Restaurant.from(
+      restaurantModel.id,
+      restaurantModel.name,
+      restaurantModel.description,
+      restaurantModel.managerId,
+      restaurantModel.createdAt,
+      restaurantModel.updatedAt
+    );
   }
 }

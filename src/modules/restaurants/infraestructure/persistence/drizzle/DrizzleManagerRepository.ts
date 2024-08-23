@@ -15,15 +15,7 @@ export class DrizzleManagerRepository implements ManagerRepository {
         role
       })
       .returning();
-    return Manager.from(
-      managerStored.id,
-      managerStored.name,
-      managerStored.email,
-      managerStored.phone,
-      managerStored.role,
-      managerStored.createdAt,
-      managerStored.updatedAt
-    );
+    return this.toEntity(managerStored);
   }
 
   async findById(managerId: string): Promise<Manager | null> {
@@ -32,13 +24,18 @@ export class DrizzleManagerRepository implements ManagerRepository {
         return eq(fields.id, managerId);
       }
     });
-    return managerStored
-      ? Manager.create(
-          managerStored.name,
-          managerStored.email,
-          managerStored.phone,
-          managerStored.role
-        )
-      : null;
+    return managerStored ? this.toEntity(managerStored) : null;
+  }
+
+  private toEntity(managerModel: typeof users.$inferSelect): Manager {
+    return Manager.from(
+      managerModel.id,
+      managerModel.name,
+      managerModel.email,
+      managerModel.phone,
+      managerModel.role,
+      managerModel.createdAt,
+      managerModel.updatedAt
+    );
   }
 }
