@@ -22,7 +22,7 @@ export class CreateRestaurantUseCase implements CreateRestaurantInputPort {
     await this.validateRestaurantExists(restaurantName);
     const manager = Manager.create(managerName, email, phone, 'manager');
     const managerCreated = await this.managerRepository.create(manager);
-    const { id: managerId } = managerCreated.toJSON();
+    const { id: managerId } = managerCreated.getAttributes();
     if (!managerId) throw new NotFoundError('Gerente não encontrado');
     const restaurant = Restaurant.create(restaurantName, null, managerId);
     await this.restaurantRepository.create(restaurant);

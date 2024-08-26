@@ -5,7 +5,7 @@ import { Manager } from '../../../domain/manager/Manager';
 
 export class DrizzleManagerRepository implements ManagerRepository {
   async create(manager: Manager): Promise<Manager> {
-    const { name, email, phone, role } = manager.toJSON();
+    const { name, email, phone, role } = manager.getAttributes();
     const [managerStored] = await db
       .insert(users)
       .values({

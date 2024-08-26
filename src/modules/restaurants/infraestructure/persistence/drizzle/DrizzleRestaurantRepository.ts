@@ -5,7 +5,7 @@ import { Restaurant } from '../../../domain/restaurant/Restaurant';
 
 export class DrizzleRestaurantRepository implements RestaurantRepository {
   async create(restaurant: Restaurant): Promise<Restaurant> {
-    const { name, description, managerId } = restaurant.toJSON();
+    const { name, description, managerId } = restaurant.getAttributes();
     const [restaurantStored] = await db
       .insert(restaurants)
       .values({

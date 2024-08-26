@@ -26,7 +26,7 @@ export class Manager {
     return new Manager(id, name, email, phone, role, createdAt, updatedAt);
   }
 
-  public toJSON() {
+  public getAttributes() {
     return {
       id: this.id,
       name: this.name,

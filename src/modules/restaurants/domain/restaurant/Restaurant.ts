@@ -23,7 +23,7 @@ export class Restaurant {
     return new Restaurant(id, name, description, managerId, createdAt, updatedAt);
   }
 
-  public toJSON() {
+  public getAttributes() {
     return {
       id: this.id,
       name: this.name,
