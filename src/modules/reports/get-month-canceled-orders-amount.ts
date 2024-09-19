@@ -1,9 +1,9 @@
 import Elyia from 'elysia';
-import { auth } from '../../shared/infra/web/rest/middlewares/auth';
+import { auth } from '../../shared/infra/adapter/driver/rest/middlewares/auth';
 import dayjs from 'dayjs';
 import { UnauthorizedError } from '../../shared/infra/error/UnauthorizedError';
-import { db } from '../../shared/infra/persistence/drizzle/connection';
-import { orders } from '../../shared/infra/persistence/drizzle/schema';
+import { db } from '../../shared/infra/adapter/driven/persistence/drizzle/connection';
+import { orders } from '../../shared/infra/adapter/driven/persistence/drizzle/schema';
 import { and, count, eq, gte, sql } from 'drizzle-orm';
 
 export const getMonthCanceledOrdersAmount = new Elyia()

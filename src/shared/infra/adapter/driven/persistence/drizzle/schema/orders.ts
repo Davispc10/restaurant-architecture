@@ -2,7 +2,7 @@ import { text, timestamp, pgTable, pgEnum, integer } from 'drizzle-orm/pg-core';
 import { createId } from '@paralleldrive/cuid2';
 import { relations } from 'drizzle-orm';
 import { ordersItems } from './order-items';
-import { restaurants } from '../../../../../modules/restaurants/infra/adapter/driven/persistence/drizzle/schema/restaurants';
+import { restaurants } from '../../../../../../../modules/restaurants/infra/adapter/driven/persistence/drizzle/schema/restaurants';
 import { users } from './users';
 
 export const orderStatusEnum = pgEnum('order_status', [
@@ -10,7 +10,7 @@ export const orderStatusEnum = pgEnum('order_status', [
   'processing',
   'delivering',
   'delivered',
-  'cancelled'
+  'cancelled',
 ]);
 
 export const orders = pgTable('orders', {
@@ -18,16 +18,16 @@ export const orders = pgTable('orders', {
     .$defaultFn(() => createId())
     .primaryKey(),
   customerId: text('customer_id').references(() => users.id, {
-    onDelete: 'set null'
+    onDelete: 'set null',
   }),
   restaurantId: text('restaurant_id')
     .references(() => restaurants.id, {
-      onDelete: 'cascade'
+      onDelete: 'cascade',
     })
     .notNull(),
   status: orderStatusEnum('status').default('pending').notNull(),
   totalInCents: integer('total_in_cents').notNull(),
-  createdAt: timestamp('created_at').notNull().defaultNow()
+  createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
 export const ordersRelations = relations(orders, ({ one, many }) => {
@@ -35,13 +35,13 @@ export const ordersRelations = relations(orders, ({ one, many }) => {
     customer: one(users, {
       fields: [orders.customerId],
       references: [users.id],
-      relationName: 'order_customer'
+      relationName: 'order_customer',
     }),
     restaurant: one(restaurants, {
       fields: [orders.restaurantId],
       references: [restaurants.id],
-      relationName: 'order_restaurant'
+      relationName: 'order_restaurant',
     }),
-    orderItems: many(ordersItems)
+    orderItems: many(ordersItems),
   };
 });

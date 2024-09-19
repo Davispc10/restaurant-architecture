@@ -1,7 +1,7 @@
 import { text, timestamp, pgTable, pgEnum } from 'drizzle-orm/pg-core';
 import { createId } from '@paralleldrive/cuid2';
 import { relations } from 'drizzle-orm';
-import { restaurants } from '../../../../../modules/restaurants/infra/adapter/driven/persistence/drizzle/schema/restaurants';
+import { restaurants } from '../../../../../../../modules/restaurants/infra/adapter/driven/persistence/drizzle/schema/restaurants';
 import { orders } from './orders';
 export const userRoleEnum = pgEnum('user_role', ['manager', 'customer']);
 
@@ -14,7 +14,7 @@ export const users = pgTable('users', {
   phone: text('phone'),
   role: userRoleEnum('role').default('customer').notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow()
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
 
 export const usersRelations = relations(users, ({ one, many }) => {
@@ -22,8 +22,8 @@ export const usersRelations = relations(users, ({ one, many }) => {
     managedRestaurant: one(restaurants, {
       fields: [users.id],
       references: [restaurants.managerId],
-      relationName: 'managed_restaurant'
+      relationName: 'managed_restaurant',
     }),
-    orders: many(orders)
+    orders: many(orders),
   };
 });

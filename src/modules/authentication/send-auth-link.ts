@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 import Elysia, { t } from 'elysia';
-import { db } from '@shared/infra/persistence/drizzle/connection';
-import { authLinks } from '@shared/infra/persistence/drizzle/schema';
+import { db } from '@shared/infra/adapter/driven/persistence/drizzle/connection';
+import { authLinks } from '@shared/infra/adapter/driven/persistence/drizzle/schema';
 import { createId } from '@paralleldrive/cuid2';
 import { env } from '@env';
 import { mail } from '@shared/infra/lib/mail';

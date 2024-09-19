@@ -1,9 +1,9 @@
 import { Elysia, t } from 'elysia';
-import { auth } from '../../shared/infra/web/rest/middlewares/auth';
-import { db } from '../../shared/infra/persistence/drizzle/connection';
+import { auth } from '../../shared/infra/adapter/driver/rest/middlewares/auth';
+import { db } from '../../shared/infra/adapter/driven/persistence/drizzle/connection';
 import { UnauthorizedError } from '../../shared/infra/error/UnauthorizedError';
 import { createSelectSchema } from 'drizzle-typebox';
-import { orders, users } from '../../shared/infra/persistence/drizzle/schema';
+import { orders, users } from '../../shared/infra/adapter/driven/persistence/drizzle/schema';
 import { and, count, desc, eq, ilike, sql } from 'drizzle-orm';
 
 export const getOrders = new Elysia().use(auth).get(

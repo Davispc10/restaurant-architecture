@@ -1,8 +1,8 @@
 import { Elysia, t } from 'elysia';
-import { auth } from '../../shared/infra/web/rest/middlewares/auth';
-import { db } from '../../shared/infra/persistence/drizzle/connection';
+import { auth } from '../../shared/infra/adapter/driver/rest/middlewares/auth';
+import { db } from '../../shared/infra/adapter/driven/persistence/drizzle/connection';
 import { UnauthorizedError } from '../../shared/infra/error/UnauthorizedError';
-import { orders } from '../../shared/infra/persistence/drizzle/schema';
+import { orders } from '../../shared/infra/adapter/driven/persistence/drizzle/schema';
 import { eq } from 'drizzle-orm';
 
 export const cancelOrder = new Elysia().use(auth).patch(

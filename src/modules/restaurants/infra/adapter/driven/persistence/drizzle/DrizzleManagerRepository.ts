@@ -1,5 +1,5 @@
-import { db } from '@shared/infra/persistence/drizzle/connection';
-import { users } from '@shared/infra/persistence/drizzle/schema';
+import { db } from '@shared/infra/adapter/driven/persistence/drizzle/connection';
+import { users } from '@shared/infra/adapter/driven/persistence/drizzle/schema';
 import type { ManagerRepository } from '../../../../../application/port/driven/ManagerRepository';
 import { Manager } from '../../../../../domain/manager/Manager';
 

@@ -1,19 +1,19 @@
 import jwt from '@elysiajs/jwt';
 import Elysia, { t, type Static } from 'elysia';
-import { env } from '../../../../../env';
-import { UnauthorizedError } from '../../../error/UnauthorizedError';
+import { env } from '@env';
+import { UnauthorizedError } from '../../../../error/UnauthorizedError';
 
 const jwtPayload = t.Object({
   sub: t.String(),
-  restaurantId: t.Optional(t.String())
+  restaurantId: t.Optional(t.String()),
 });
 
 export const auth = new Elysia()
   .use(
     jwt({
       secret: env.JWT_SECRET_KEY,
-      schema: jwtPayload
-    })
+      schema: jwtPayload,
+    }),
   )
   .derive({ as: 'scoped' }, ({ jwt, cookie: { auth } }) => {
     return {
@@ -37,8 +37,8 @@ export const auth = new Elysia()
 
         return {
           userId: payload.sub,
-          restaurantId: payload.restaurantId
+          restaurantId: payload.restaurantId,
         };
-      }
+      },
     };
   });

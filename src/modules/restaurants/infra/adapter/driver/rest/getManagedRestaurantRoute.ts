@@ -1,5 +1,5 @@
 import Elysia from 'elysia';
-import { auth } from '@shared/infra/web/rest/middlewares/auth';
+import { auth } from '@shared/infra/adapter/driver/rest/middlewares/auth';
 import { container } from 'tsyringe';
 import type { GetManagedRestaurantInputPort } from '../../../../application/port/driver/GetManagedRestaurantInputPort';
 import { Messages } from '../../common/Messages';

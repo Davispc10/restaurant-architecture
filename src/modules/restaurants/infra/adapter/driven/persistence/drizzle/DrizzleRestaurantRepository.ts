@@ -1,4 +1,4 @@
-import { db } from '@shared/infra/persistence/drizzle/connection';
+import { db } from '@shared/infra/adapter/driven/persistence/drizzle/connection';
 import { restaurants } from './schema/restaurants';
 import type { RestaurantRepository } from '../../../../../application/port/driven/RestaurantRepository';
 import { Restaurant } from '../../../../../domain/restaurant/Restaurant';

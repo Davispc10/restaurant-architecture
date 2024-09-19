@@ -1,8 +1,12 @@
 import { Elysia } from 'elysia';
-import { auth } from '../../shared/infra/web/rest/middlewares/auth';
+import { auth } from '../../shared/infra/adapter/driver/rest/middlewares/auth';
 import { UnauthorizedError } from '../../shared/infra/error/UnauthorizedError';
-import { db } from '../../shared/infra/persistence/drizzle/connection';
-import { orders, ordersItems, products } from '../../shared/infra/persistence/drizzle/schema';
+import { db } from '../../shared/infra/adapter/driven/persistence/drizzle/connection';
+import {
+  orders,
+  ordersItems,
+  products,
+} from '../../shared/infra/adapter/driven/persistence/drizzle/schema';
 import { desc, eq, sum } from 'drizzle-orm';
 
 export const getPopularProducts = new Elysia()

@@ -1,6 +1,6 @@
 import { text, timestamp, pgTable, integer } from 'drizzle-orm/pg-core';
 import { createId } from '@paralleldrive/cuid2';
-import { restaurants } from '../../../../../modules/restaurants/infra/adapter/driven/persistence/drizzle/schema/restaurants';
+import { restaurants } from '../../../../../../../modules/restaurants/infra/adapter/driven/persistence/drizzle/schema/restaurants';
 import { relations } from 'drizzle-orm';
 import { ordersItems } from './order-items';
 
@@ -13,11 +13,11 @@ export const products = pgTable('products', {
   priceInCents: integer('price_in_cents').notNull(),
   restaurantId: text('restaurant_id')
     .references(() => restaurants.id, {
-      onDelete: 'cascade'
+      onDelete: 'cascade',
     })
     .notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow()
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
 
 export const productsRelations = relations(products, ({ one, many }) => {
@@ -25,8 +25,8 @@ export const productsRelations = relations(products, ({ one, many }) => {
     restaurant: one(restaurants, {
       fields: [products.restaurantId],
       references: [restaurants.id],
-      relationName: 'product_restaurant'
+      relationName: 'product_restaurant',
     }),
-    orderItems: many(ordersItems)
+    orderItems: many(ordersItems),
   };
 });
