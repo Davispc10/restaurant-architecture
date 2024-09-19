@@ -1,9 +1,9 @@
 import Elyia from 'elysia';
-import { auth } from '../../shared/infraestructure/web/rest/middlewares/auth';
+import { auth } from '../../shared/infra/web/rest/middlewares/auth';
 import dayjs from 'dayjs';
-import { UnauthorizedError } from '../../shared/infraestructure/error/UnauthorizedError';
-import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
-import { orders } from '../../shared/infraestructure/persistence/drizzle/schema';
+import { UnauthorizedError } from '../../shared/infra/error/UnauthorizedError';
+import { db } from '../../shared/infra/persistence/drizzle/connection';
+import { orders } from '../../shared/infra/persistence/drizzle/schema';
 import { and, count, eq, gte, sql } from 'drizzle-orm';
 
 export const getMonthCanceledOrdersAmount = new Elyia()
@@ -21,15 +21,15 @@ export const getMonthCanceledOrdersAmount = new Elyia()
     const ordersPerMonth = await db
       .select({
         montWithMontyhAndYear: sql<string>`TO_CHAR(${orders.createdAt}, 'YYYY-MM')`,
-        amount: count()
+        amount: count(),
       })
       .from(orders)
       .where(
         and(
           eq(orders.restaurantId, restaurantId),
           eq(orders.status, 'cancelled'),
-          gte(orders.createdAt, startOfLastMonth.toDate())
-        )
+          gte(orders.createdAt, startOfLastMonth.toDate()),
+        ),
       )
       .groupBy(sql`TO_CHAR(${orders.createdAt}, 'YYYY-MM')`);
 
@@ -37,10 +37,10 @@ export const getMonthCanceledOrdersAmount = new Elyia()
     const lastMonthWithYear = lastmonth.format('YYYY-MM');
 
     const currentMonthOrdersAmount = ordersPerMonth.find(
-      ({ montWithMontyhAndYear }) => montWithMontyhAndYear === currentMonthWithYear
+      ({ montWithMontyhAndYear }) => montWithMontyhAndYear === currentMonthWithYear,
     );
     const lastMonthReceipt = ordersPerMonth.find(
-      ({ montWithMontyhAndYear }) => montWithMontyhAndYear === lastMonthWithYear
+      ({ montWithMontyhAndYear }) => montWithMontyhAndYear === lastMonthWithYear,
     );
 
     const diffFromLastMonth =
@@ -50,6 +50,6 @@ export const getMonthCanceledOrdersAmount = new Elyia()
 
     return {
       amount: currentMonthOrdersAmount?.amount,
-      diffFromLastMonth: diffFromLastMonth ? Number((diffFromLastMonth - 100).toFixed(2)) : 0
+      diffFromLastMonth: diffFromLastMonth ? Number((diffFromLastMonth - 100).toFixed(2)) : 0,
     };
   });

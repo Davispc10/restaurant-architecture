@@ -1,8 +1,8 @@
 import Elysia, { t } from 'elysia';
-import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
+import { db } from '../../shared/infra/persistence/drizzle/connection';
 import dayjs from 'dayjs';
-import { auth } from '../../shared/infraestructure/web/rest/middlewares/auth';
-import { authLinks } from '../../shared/infraestructure/persistence/drizzle/schema';
+import { auth } from '../../shared/infra/web/rest/middlewares/auth';
+import { authLinks } from '../../shared/infra/persistence/drizzle/schema';
 import { eq } from 'drizzle-orm';
 
 export const authenticateFromLink = new Elysia().use(auth).get(
@@ -13,7 +13,7 @@ export const authenticateFromLink = new Elysia().use(auth).get(
     const authLinkFromCode = await db.query.authLinks.findFirst({
       where(fields, { eq }) {
         return eq(fields.code, code);
-      }
+      },
     });
 
     if (!authLinkFromCode) {
@@ -29,7 +29,7 @@ export const authenticateFromLink = new Elysia().use(auth).get(
     const managedRestaurant = await db.query.restaurants.findFirst({
       where(fields, { eq }) {
         return eq(fields.managerId, authLinkFromCode.userId);
-      }
+      },
     });
 
     await signUser({ sub: authLinkFromCode.userId, restaurantId: managedRestaurant?.id });
@@ -41,7 +41,7 @@ export const authenticateFromLink = new Elysia().use(auth).get(
   {
     query: t.Object({
       code: t.String(),
-      redirect: t.String()
-    })
-  }
+      redirect: t.String(),
+    }),
+  },
 );

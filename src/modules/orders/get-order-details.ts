@@ -1,7 +1,7 @@
 import { Elysia, t } from 'elysia';
-import { auth } from '../../shared/infraestructure/web/rest/middlewares/auth';
-import { UnauthorizedError } from '../../shared/infraestructure/error/UnauthorizedError';
-import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
+import { auth } from '../../shared/infra/web/rest/middlewares/auth';
+import { UnauthorizedError } from '../../shared/infra/error/UnauthorizedError';
+import { db } from '../../shared/infra/persistence/drizzle/connection';
 
 export const getOrderDetails = new Elysia().use(auth).get(
   '/orders/:orderId',
@@ -18,34 +18,34 @@ export const getOrderDetails = new Elysia().use(auth).get(
         id: true,
         status: true,
         totalInCents: true,
-        createdAt: true
+        createdAt: true,
       },
       with: {
         customer: {
           columns: {
             name: true,
             phone: true,
-            email: true
-          }
+            email: true,
+          },
         },
         orderItems: {
           columns: {
             id: true,
             quantity: true,
-            priceInCents: true
+            priceInCents: true,
           },
           with: {
             product: {
               columns: {
-                name: true
-              }
-            }
-          }
-        }
+                name: true,
+              },
+            },
+          },
+        },
       },
       where(fields, { eq, and }) {
         return and(eq(fields.id, orderId), eq(fields.restaurantId, restaurantId));
-      }
+      },
     });
 
     if (!order) {
@@ -57,7 +57,7 @@ export const getOrderDetails = new Elysia().use(auth).get(
   },
   {
     params: t.Object({
-      orderId: t.String()
-    })
-  }
+      orderId: t.String(),
+    }),
+  },
 );

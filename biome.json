@@ -10,57 +10,16 @@
       "suspicious": {
         "noExplicitAny": "off",
         "noPrototypeBuiltins": "off",
-        "noConfusingVoidType": "off",
-        "noImplicitAnyLet": "warn",
-        "noAssignInExpressions": "warn",
-        "noDoubleEquals": "warn",
-        "noGlobalIsNan": "warn",
-        "noGlobalIsFinite": "warn",
-        "useIsArray": "warn",
-        "noShadowRestrictedNames": "warn",
-        "noMisleadingCharacterClass": "warn",
-        "useValidTypeof": "warn",
-        "noRedeclare": "warn",
-        "noDuplicateClassMembers": "warn",
-        "noAsyncPromiseExecutor": "warn"
+        "noConfusingVoidType": "off"
       },
-      "correctness": {
-        "noUnusedImports": "warn",
-        "noVoidTypeReturn": "warn",
-        "noConstructorReturn": "warn",
-        "noUnnecessaryContinue": "warn",
-        "noUnsafeOptionalChaining": "warn",
-        "noSwitchDeclarations": "warn"
-      },
+      "correctness": {},
       "style": {
-        "useImportType": "off",
-        "useTemplate": "warn",
-        "noParameterAssign": "warn",
-        "useNodejsImportProtocol": "warn",
-        "useExponentiationOperator": "warn",
-        "noUselessElse": "warn",
-        "useSingleVarDeclarator": "warn",
-        "useDefaultParameterLast": "warn",
-        "noArguments": "warn",
-        "noUnusedTemplateLiteral": "warn",
-        "noNonNullAssertion": "warn",
-        "noCommaOperator": "warn"
+        "useImportType": "off"
       },
       "complexity": {
-        "noForEach": "warn",
-        "noStaticOnlyClass": "off",
-        "noThisInStatic": "warn",
-        "useOptionalChain": "warn",
-        "noBannedTypes": "warn",
-        "noUselessConstructor": "warn",
-        "noUselessCatch": "warn",
-        "useLiteralKeys": "warn",
-        "noExcessiveNestedTestSuites": "warn"
+        "noStaticOnlyClass": "off"
       },
-      "performance": {
-        "noDelete": "warn",
-        "noAccumulatingSpread": "warn"
-      }
+      "performance": {}
     },
     "ignore": ["./dist"]
   },
@@ -79,8 +38,7 @@
       "arrowParentheses": "always",
       "bracketSpacing": true,
       "quoteProperties": "asNeeded",
-      "semicolons": "always",
-      "trailingComma": "none"
+      "semicolons": "always"
     },
     "parser": {
       "unsafeParameterDecoratorsEnabled": true

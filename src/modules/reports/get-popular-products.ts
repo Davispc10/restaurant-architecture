@@ -1,12 +1,8 @@
 import { Elysia } from 'elysia';
-import { auth } from '../../shared/infraestructure/web/rest/middlewares/auth';
-import { UnauthorizedError } from '../../shared/infraestructure/error/UnauthorizedError';
-import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
-import {
-  orders,
-  ordersItems,
-  products
-} from '../../shared/infraestructure/persistence/drizzle/schema';
+import { auth } from '../../shared/infra/web/rest/middlewares/auth';
+import { UnauthorizedError } from '../../shared/infra/error/UnauthorizedError';
+import { db } from '../../shared/infra/persistence/drizzle/connection';
+import { orders, ordersItems, products } from '../../shared/infra/persistence/drizzle/schema';
 import { desc, eq, sum } from 'drizzle-orm';
 
 export const getPopularProducts = new Elysia()
@@ -20,7 +16,7 @@ export const getPopularProducts = new Elysia()
     const popularProducts = await db
       .select({
         product: products.name,
-        amount: sum(ordersItems.quantity).mapWith(Number)
+        amount: sum(ordersItems.quantity).mapWith(Number),
       })
       .from(ordersItems)
       .leftJoin(orders, eq(orders.id, ordersItems.id))

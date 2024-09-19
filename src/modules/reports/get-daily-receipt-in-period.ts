@@ -1,9 +1,9 @@
 import Elyia, { t } from 'elysia';
-import { auth } from '../../shared/infraestructure/web/rest/middlewares/auth';
+import { auth } from '../../shared/infra/web/rest/middlewares/auth';
 import dayjs from 'dayjs';
-import { UnauthorizedError } from '../../shared/infraestructure/error/UnauthorizedError';
-import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
-import { orders } from '../../shared/infraestructure/persistence/drizzle/schema';
+import { UnauthorizedError } from '../../shared/infra/error/UnauthorizedError';
+import { db } from '../../shared/infra/persistence/drizzle/connection';
+import { orders } from '../../shared/infra/persistence/drizzle/schema';
 import { and, eq, gte, lte, sql, sum } from 'drizzle-orm';
 
 export const getDailyReceiptInPeriod = new Elyia().use(auth).get(
@@ -27,7 +27,7 @@ export const getDailyReceiptInPeriod = new Elyia().use(auth).get(
     const receiptPerDay = await db
       .select({
         date: sql<string>`TO_CHAR(${orders.createdAt}, 'DD/MM')`,
-        receipt: sum(orders.totalInCents).mapWith(Number)
+        receipt: sum(orders.totalInCents).mapWith(Number),
       })
       .from(orders)
       .where(
@@ -35,10 +35,10 @@ export const getDailyReceiptInPeriod = new Elyia().use(auth).get(
           eq(orders.restaurantId, restaurantId),
           gte(
             orders.createdAt,
-            startDate.startOf('day').add(startDate.utcOffset(), 'minutes').toDate()
+            startDate.startOf('day').add(startDate.utcOffset(), 'minutes').toDate(),
           ),
-          lte(orders.createdAt, endDate.endOf('day').add(endDate.utcOffset(), 'minutes').toDate())
-        )
+          lte(orders.createdAt, endDate.endOf('day').add(endDate.utcOffset(), 'minutes').toDate()),
+        ),
       )
       .groupBy(sql`TO_CHAR(${orders.createdAt}, 'DD/MM')`);
 
@@ -60,7 +60,7 @@ export const getDailyReceiptInPeriod = new Elyia().use(auth).get(
   {
     query: t.Object({
       from: t.Optional(t.String()),
-      to: t.Optional(t.String())
-    })
-  }
+      to: t.Optional(t.String()),
+    }),
+  },
 );

@@ -1,10 +1,10 @@
 import Elysia from 'elysia';
-import { registerRestaurantRoute } from './modules/restaurants/infraestructure/web/rest/registerRestaurantRoute';
+import { registerRestaurantRoute } from './modules/restaurants/infra/adapter/driver/rest/registerRestaurantRoute';
 import { sendAuthLink } from './modules/authentication/send-auth-link';
 import { authenticateFromLink } from './modules/authentication/authenticate-from-link';
 import { signOut } from './modules/authentication/sign-out';
 import { getProfile } from './modules/authentication/get-profile';
-import { getManagedRestaurantRoute } from './modules/restaurants/infraestructure/web/rest/getManagedRestaurantRoute';
+import { getManagedRestaurantRoute } from './modules/restaurants/infra/adapter/driver/rest/getManagedRestaurantRoute';
 import { getOrderDetails } from './modules/orders/get-order-details';
 import { approveOrder } from './modules/orders/approve-order';
 import { cancelOrder } from './modules/orders/cancel-order';
@@ -18,7 +18,7 @@ import { getMonthCanceledOrdersAmount } from './modules/reports/get-month-cancel
 import { getDailyReceiptInPeriod } from './modules/reports/get-daily-receipt-in-period';
 import { getPopularProducts } from './modules/reports/get-popular-products';
 import chalk from 'chalk';
-import './shared/infraestructure/lib/tsyringe';
+import './shared/infra/lib/tsyringe';
 
 const app = new Elysia()
   .use(registerRestaurantRoute)

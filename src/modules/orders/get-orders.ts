@@ -1,9 +1,9 @@
 import { Elysia, t } from 'elysia';
-import { auth } from '../../shared/infraestructure/web/rest/middlewares/auth';
-import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
-import { UnauthorizedError } from '../../shared/infraestructure/error/UnauthorizedError';
+import { auth } from '../../shared/infra/web/rest/middlewares/auth';
+import { db } from '../../shared/infra/persistence/drizzle/connection';
+import { UnauthorizedError } from '../../shared/infra/error/UnauthorizedError';
 import { createSelectSchema } from 'drizzle-typebox';
-import { orders, users } from '../../shared/infraestructure/persistence/drizzle/schema';
+import { orders, users } from '../../shared/infra/persistence/drizzle/schema';
 import { and, count, desc, eq, ilike, sql } from 'drizzle-orm';
 
 export const getOrders = new Elysia().use(auth).get(
@@ -24,7 +24,7 @@ export const getOrders = new Elysia().use(auth).get(
         createdAt: orders.createdAt,
         status: orders.status,
         total: orders.totalInCents,
-        customerName: users.name
+        customerName: users.name,
       })
       .from(orders)
       .innerJoin(users, eq(users.id, orders.customerId))
@@ -33,8 +33,8 @@ export const getOrders = new Elysia().use(auth).get(
           eq(orders.restaurantId, restaurantId),
           orderId ? ilike(orders.id, `%${orderId}%`) : undefined,
           status ? ilike(orders.status, status) : undefined,
-          customerName ? ilike(users.name, `${customerName}`) : undefined
-        )
+          customerName ? ilike(users.name, `${customerName}`) : undefined,
+        ),
       );
 
     const [[{ count: amountOfOrders }], allOrders] = await Promise.all([
@@ -53,9 +53,9 @@ export const getOrders = new Elysia().use(auth).get(
               WHEN 'delivered' THEN 4
               WHEN 'cancelled' THEN 99
             END`,
-            desc(fields.createdAt)
+            desc(fields.createdAt),
           ];
-        })
+        }),
     ]);
 
     return {
@@ -63,8 +63,8 @@ export const getOrders = new Elysia().use(auth).get(
       meta: {
         pageIndex,
         perPage: 10,
-        totalCount: amountOfOrders
-      }
+        totalCount: amountOfOrders,
+      },
     };
   },
   {
@@ -72,7 +72,7 @@ export const getOrders = new Elysia().use(auth).get(
       customerName: t.Optional(t.String()),
       orderId: t.Optional(t.String()),
       status: t.Optional(createSelectSchema(orders).properties.status),
-      pageIndex: t.Numeric({ minimum: 0 })
-    })
-  }
+      pageIndex: t.Numeric({ minimum: 0 }),
+    }),
+  },
 );

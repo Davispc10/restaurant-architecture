@@ -1,10 +1,10 @@
 import nodemailer from 'nodemailer';
 import Elysia, { t } from 'elysia';
-import { db } from '../../shared/infraestructure/persistence/drizzle/connection';
-import { authLinks } from '../../shared/infraestructure/persistence/drizzle/schema';
+import { db } from '@shared/infra/persistence/drizzle/connection';
+import { authLinks } from '@shared/infra/persistence/drizzle/schema';
 import { createId } from '@paralleldrive/cuid2';
-import { env } from '../../env';
-import { mail } from '../../shared/infraestructure/lib/mail';
+import { env } from '@env';
+import { mail } from '@shared/infra/lib/mail';
 
 export const sendAuthLink = new Elysia().post(
   '/authenticate',
@@ -14,7 +14,7 @@ export const sendAuthLink = new Elysia().post(
     const userFromEmail = await db.query.users.findFirst({
       where(fields, { eq }) {
         return eq(fields.email, email);
-      }
+      },
     });
 
     if (!userFromEmail) {
@@ -25,7 +25,7 @@ export const sendAuthLink = new Elysia().post(
 
     await db.insert(authLinks).values({
       code: authLinkCode,
-      userId: userFromEmail.id
+      userId: userFromEmail.id,
     });
 
     const authLink = new URL('/auth-links/authenticate', env.API_BASE_URL);
@@ -37,18 +37,18 @@ export const sendAuthLink = new Elysia().post(
     const info = await mail.sendMail({
       from: {
         name: 'Pizza Shop',
-        address: 'hi@pizzashop.com'
+        address: 'hi@pizzashop.com',
       },
       to: email,
       subject: 'Authenticate to PizzaShop',
-      text: `Use the following link to authenticate on PizzaShop: ${authLink.toString()}`
+      text: `Use the following link to authenticate on PizzaShop: ${authLink.toString()}`,
     });
 
     console.log(nodemailer.getTestMessageUrl(info));
   },
   {
     body: t.Object({
-      email: t.String({ format: 'email' })
-    })
-  }
+      email: t.String({ format: 'email' }),
+    }),
+  },
 );
